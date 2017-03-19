@@ -40,47 +40,8 @@ double dn_s(double n_s, double V_s){
 
   double runge(double *V_s, double *inp, double *n_s,double *V_d,double *h_d, double *n_d,double *p_d,int i){
 
-    /*
-  double kV_s1 = dV_s(V_s[i], inp[i], V_d[i],n_s[i]);
-  double kn_s1 = dn_s(n_s[i], V_s[i]);
-  double kV_d1 = dV_d(V_d[i], V_s[i] ,h_d[i], n_d[i], p_d[i]);
-  double kh_d1 = dh_d(h_d[i], V_d[i]);
-  double kn_d1 = dn_d(n_d[i], V_d[i]);
-  double kp_d1 = dp_d(p_d[i], V_d[i]);
-  
-  double kV_s2 = dV_s(V_s[i]+DT*kV_s1*0.5, inp[i], V_d[i]+DT*kV_d1*0.5 ,n_s[i]+DT*kn_s1*0.5);
-  double kn_s2 = dn_s(n_s[i]+DT*kn_s1*0.5, V_s[i]+DT*kV_s1*0.5);
-  double kV_d2 = dV_d(V_d[i]+DT*kV_d1*0.5, V_s[i]+DT*kV_s1*0.5 ,h_d[i]+DT*kh_d1*0.5, n_d[i]+DT*kn_d1*0.5, p_d[i]+DT*kp_d1*0.5);
-  double kh_d2 = dh_d(h_d[i]+DT*kh_d1*0.5, V_d[i]+DT*kV_d1*0.5);
-  double kn_d2 = dn_d(n_d[i]+DT*kn_d1*0.5, V_d[i]+DT*kV_d1*0.5);
-  double kp_d2 = dp_d(p_d[i]+DT*kp_d1*0.5, V_d[i]+DT*kV_d1*0.5);
 
-  double kV_s3 = dV_s(V_s[i]+DT*kV_s2*0.5, inp[i], V_d[i]+DT*kV_d2*0.5 ,n_s[i]+DT*kn_s2*0.5);
-  double kn_s3 = dn_s(n_s[i]+DT*kn_s2*0.5, V_s[i]+DT*kV_s2*0.5);
-  double kV_d3 = dV_d(V_d[i]+DT*kV_d2*0.5, V_s[i]+DT*kV_s2*0.5 ,h_d[i]+DT*kh_d2*0.5, n_d[i]+DT*kn_d2*0.5, p_d[i]+DT*kp_d2*0.5);
-  double kh_d3 = dh_d(h_d[i]+DT*kh_d2*0.5, V_d[i]+DT*kV_d2*0.5);
-  double kn_d3 = dn_d(n_d[i]+DT*kn_d2*0.5, V_d[i]+DT*kV_d2*0.5);
-  double kp_d3 = dp_d(p_d[i]+DT*kp_d2*0.5, V_d[i]+DT*kV_d2*0.5);
-
-  double kV_s4 = dV_s(V_s[i]+DT*kV_s3, inp[i], V_d[i]+DT*kV_d2 ,n_s[i]+DT*kn_s2);
-  double kn_s4 = dn_s(n_s[i]+DT*kn_s3, V_s[i]+DT*kV_s3);
-  double kV_d4 = dV_d(V_d[i]+DT*kV_d3, V_s[i]+DT*kV_s3 ,h_d[i]+DT*kh_d3, n_d[i]+DT*kn_d3, p_d[i]+DT*kp_d3);
-  double kh_d4 = dh_d(h_d[i]+DT*kh_d3, V_d[i]+DT*kV_d3);
-  double kn_d4 = dn_d(n_d[i]+DT*kn_d3, V_d[i]+DT*kV_d3);
-  double kp_d4 = dp_d(p_d[i]+DT*kp_d3, V_d[i]+DT*kV_d3);
-
-
-
-
-  V_s[i] += DT*(kV_s1 + 2.0*kV_s2 + 2.0*kV_s3 + kV_s4)/6.0;
-  n_s[i] += DT*(kn_s1 + 2.0*kn_s2 + 2.0*kn_s3 + kn_s4)/6.0;
-  V_d[i] += DT*(kV_d1 + 2.0*kV_d2 + 2.0*kV_d3 + kV_d4)/6.0;
-  h_d[i] += DT*(kh_d1 + 2.0*kh_d2 + 2.0*kh_d3 + kh_d4)/6.0;
-  n_d[i] += DT*(kn_d1 + 2.0*kn_d2 + 2.0*kn_d3 + kn_d4)/6.0;
-  p_d[i] += DT*(kp_d1 + 2.0*kp_d2 + 2.0*kp_d3 + kp_d4)/6.0;
-
-    */
-    double kV_s1 = DT*dV_s(V_s[i], inp[i], V_d[i],n_s[i]);
+  double kV_s1 = DT*dV_s(V_s[i], inp[i], V_d[i],n_s[i]);
   double kn_s1 = DT*dn_s(n_s[i], V_s[i]);
   double kV_d1 = DT*dV_d(V_d[i], V_s[i] ,h_d[i], n_d[i], p_d[i]);
   double kh_d1 = DT*dh_d(h_d[i], V_d[i]);
@@ -126,12 +87,12 @@ void init(double *V_s, double *n_s,double *V_d,double *h_d, double *n_d,double *
 {
   #pragma omp parallel for
   for(int i=0;i<NUM;i++){
-    V_s[i] = V0;
-    n_s[i] = 0.5;
-    V_d[i] = V0;
-    h_d[i] = 0.1;
-    n_d[i] = 0.1;
-    p_d[i] = 0.1;
+    V_s[i] = -65.0;
+    n_s[i] = 0.0;
+    V_d[i] = -70.0;
+    h_d[i] = 0.0;
+    n_d[i] = 0.0;
+    p_d[i] = 0.0;
     inp[i] = 0;
     spike_s[i] = 0;
     spike_d[i] =0;
